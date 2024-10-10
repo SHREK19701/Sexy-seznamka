@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje Seznamka - Registrace</title>
+   <style>
+     /* Resetování výchozích stylů pro konzistenci */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styl pro celé tělo stránky */
+body {
+    font-family: Arial, sans-serif; /* Vyber font */
+    line-height: 1.6; /* Větší mezery mezi řádky */
+    background-color: #f4f4f4; /* Světle šedé pozadí */
+    color: #333; /* Tmavě šedý text */
+}
+
+/* Styl pro hlavní nadpis */
+h1 {
+    text-align: center; /* Centrovat text */
+    margin: 20px 0; /* Okraje nadpisu */
+}
+
+/* Styl pro formuláře */
+form {
+    max-width: 600px; /* Maximální šířka formuláře */
+    margin: 20px auto; /* Centrovat formulář */
+    padding: 20px; /* Vnitřní okraje */
+    background-color: #fff; /* Bílý pozadí formuláře */
+    border-radius: 8px; /* Zaoblené rohy */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Měkký stín */
+}
+
+/* Styl pro vstupy a textové oblasti */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%; /* Šířka na 100% */
+    padding: 10px; /* Vnitřní okraje */
+    margin: 10px 0; /* Okraje mezi prvky */
+    border: 1px solid #ccc; /* Světle šedý rámeček */
+    border-radius: 4px; /* Zaoblené rohy */
+}
+
+/* Styl pro tlačítka */
+button {
+    background-color: #5cb85c; /* Zelené pozadí */
+    color: white; /* Bílý text */
+    border: none; /* Bez rámečku */
+    padding: 10px 15px; /* Vnitřní okraje */
+    border-radius: 4px; /* Zaoblené rohy */
+    cursor: pointer; /* Změna kurzoru na ukazatel */
+}
+
+button:hover {
+    background-color: #4cae4c; /* Tmavší zelená při najetí myší */
+}
+
+/* Styl pro přijaté zprávy */
+#receivedMessages p {
+    background-color: #e7f3fe; /* Světle modré pozadí */
+    border: 1px solid #b8daff; /* Světle modrý rámeček */
+    padding: 10px; /* Vnitřní okraje */
+    margin: 10px 0; /* Okraje mezi zprávami */
+    border-radius: 4px; /* Zaoblené rohy */
+}
+
+    </style>
+
+</head>
+<body>
+
+<header>
+    <h1>Vítejte na Moje Seznamka</h1>
+</header>
+
+<main>
+    <h2>Vytvořit účet</h2>
+    <form id="registerForm">
+        <div class="error" id="errorMessage"></div>
+
+        <label for="username">Uživatelské jméno:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Heslo:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Potvrzení hesla:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <label for="gender">Pohlaví:</label>
+        <select id="gender" name="gender" required>
+            <option value="">Vyberte</option>
+            <option value="male">Muž</option>
+            <option value="female">Žena</option>
+            <option value="other">Jiné</option>
+        </select>
+
+        <button type="submit">Registrovat se</button>
+    </form>
+</main>
+
+<script>
+   paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: document.getElementById('amount').value
+                    },
+                    description: document.getElementById('item-name').value
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Platba byla úspěšná! Děkujeme, ' + details.payer.name.given);
+                // Zde můžeš přesměrovat uživatele nebo provést další akce, jako je ukládání do databáze
+            });
+        },
+        onError: function(err) {
+            console.error('Chyba při zpracování platby', err);
+        }
+    }).render('#paypal-button-container'); // Zobraz tlačítko
+
+
+
+
+
+ document.getElementById('registerForm').addEventListener('submit', function(event) {
+        let errorMessage = '';
+
+        // Získání hodnot formuláře
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const gender = document.getElementById('gender').value;
+
+        // Validace uživatelského jména
+        if (username.length < 3) {
+            errorMessage += 'Uživatelské jméno musí mít alespoň 3 znaky.<br>';
+        }
+
+        // Validace e-mailu pomocí regulárního výrazu
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            errorMessage += 'Zadejte platný e-mail.<br>';
+        }
+
+        // Validace hesla (minimálně 6 znaků)
+        if (password.length < 6) {
+            errorMessage += 'Heslo musí mít alespoň 6 znaků.<br>';
+        }
+
+        // Kontrola shody hesla
+        if (password !== confirmPassword) {
+            errorMessage += 'Hesla se neshodují.<br>';
+        }
+
+        // Validace výběru pohlaví
+        if (gender === '') {
+            errorMessage += 'Vyberte své pohlaví.<br>';
+        }
+
+        // Zobrazení chybové zprávy, pokud existují chyby
+        if (errorMessage !== '') {
+            document.getElementById('errorMessage').innerHTML = errorMessage;
+            event.preventDefault(); // Zastaví odeslání formuláře, pokud jsou chyby
+        }
+    });
+</script>
+
+</body>
+</html>
+
+
+
+  
+    

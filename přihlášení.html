@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Přihlášení</title>
+    <style>
+        /* Zde můžeš přidat styly */
+    </style>
+</head>
+<body>
+    <h1>Přihlášení</h1>
+    <div id="errorMessage" style="color:red;"></div>
+    <div id="successMessage" style="color:green;"></div>
+    
+    <form id="loginForm">
+        <label for="username">Uživatelské jméno:</label>
+        <input type="text" id="username" required><br>
+
+        <label for="password">Heslo:</label>
+        <input type="password" id="password" required><br>
+
+        <button type="submit">Přihlásit se</button>
+    </form>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Zamezí odeslání formuláře
+
+            // Získání hodnot formuláře
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            // Zde budeš muset implementovat logiku pro kontrolu přihlašovacích údajů.
+            // Prozatím použijeme jednoduchou kontrolu pro demonstraci.
+
+            if (username === "BATMAN70" && password === "Charalamba11@") { // Zde nahraďte s registrací
+                successMessage.innerHTML = 'Úspěšně přihlášeno!';
+                errorMessage.innerHTML = ''; // Vymaže chybovou zprávu
+            } else {
+                errorMessage.innerHTML = 'Chybné uživatelské jméno nebo heslo.';
+                successMessage.innerHTML = ''; // Vymaže úspěšnou zprávu
+            }
+        });
+    </script>
+</body>
+</html>

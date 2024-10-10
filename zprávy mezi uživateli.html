@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+
+
+
+ <meta charset="UTF-8">
+    <title>Seznamka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <img src="https://raw.githubusercontent.com/SHREK19701/moje-seznamka/main/nazev-fotografie.jpg" alt="Popis obrázku">   
+
+<h1>Přijímané zprávy</h1>
+    <form id="messageForm">
+        <input type="text" id="recipient" placeholder="Příjemce" required>
+        <textarea id="message" placeholder="Zpráva" required></textarea>
+        <button type="submit">Odeslat zprávu</button>
+    </form>
+    <div id="receivedMessages"></div>
+    <div id="successMessage"></div>
+    <div id="errorMessage"></div>
+
+    <script>
+        const messages = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            storedMessages.forEach(msg => messages.push(msg));
+            displayReceivedMessages();
+        });
+
+        function saveMessagesToLocalStorage() {
+            localStorage.setItem('messages', JSON.stringify(messages));
+        }
+
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const recipient = document.getElementById('recipient').value;
+            const messageText = document.getElementById('message').value;
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            const newMessage = { recipient: recipient, message: messageText };
+            messages.push(newMessage);
+            saveMessagesToLocalStorage();
+
+            successMessage.innerHTML = 'Zpráva byla úspěšně odeslána!';
+            errorMessage.innerHTML = '';
+
+            document.getElementById('recipient').value = '';
+            document.getElementById('message').value = '';
+
+            displayReceivedMessages();
+        });
+
+        function displayReceivedMessages() {
+            const receivedMessagesDiv = document.getElementById('receivedMessages');
+            receivedMessagesDiv.innerHTML = '';
+
+            messages.forEach((msg) => {
+                receivedMessagesDiv.innerHTML += `<p><strong>Příjemce:</strong> ${msg.recipient}<br><strong>Zpráva:</strong> ${msg.message}</p>`;
+            });
+        }
+
+        setInterval(function() {
+            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            if (storedMessages.length > messages.length) {
+                messages.splice(0, messages.length, ...storedMessages);
+                displayReceivedMessages();
+            }
+        }, 2000);
+
+        let previousMessageCount = messages.length;
+
+        setInterval(function() {
+            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            if (storedMessages.length > previousMessageCount) {
+                alert('Máte novou zprávu!');
+            }
+            previousMessageCount = storedMessages.length;
+        }, 2000);
+    </script>
+
+</body>
+</html>

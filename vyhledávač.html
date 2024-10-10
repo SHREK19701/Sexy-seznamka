@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyhledávání uživatelů</title>
+    <style>
+      /* Resetování výchozích stylů pro konzistenci */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styl pro celé tělo stránky */
+body {
+    font-family: Arial, sans-serif; /* Vyber font */
+    line-height: 1.6; /* Větší mezery mezi řádky */
+    background-color: #f4f4f4; /* Světle šedé pozadí */
+    color: #333; /* Tmavě šedý text */
+}
+
+/* Styl pro hlavní nadpis */
+h1 {
+    text-align: center; /* Centrovat text */
+    margin: 20px 0; /* Okraje nadpisu */
+}
+
+/* Styl pro formuláře */
+form {
+    max-width: 600px; /* Maximální šířka formuláře */
+    margin: 20px auto; /* Centrovat formulář */
+    padding: 20px; /* Vnitřní okraje */
+    background-color: #fff; /* Bílý pozadí formuláře */
+    border-radius: 8px; /* Zaoblené rohy */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Měkký stín */
+}
+
+/* Styl pro vstupy a textové oblasti */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%; /* Šířka na 100% */
+    padding: 10px; /* Vnitřní okraje */
+    margin: 10px 0; /* Okraje mezi prvky */
+    border: 1px solid #ccc; /* Světle šedý rámeček */
+    border-radius: 4px; /* Zaoblené rohy */
+}
+
+/* Styl pro tlačítka */
+button {
+    background-color: #5cb85c; /* Zelené pozadí */
+    color: white; /* Bílý text */
+    border: none; /* Bez rámečku */
+    padding: 10px 15px; /* Vnitřní okraje */
+    border-radius: 4px; /* Zaoblené rohy */
+    cursor: pointer; /* Změna kurzoru na ukazatel */
+}
+
+button:hover {
+    background-color: #4cae4c; /* Tmavší zelená při najetí myší */
+}
+
+/* Styl pro přijaté zprávy */
+#receivedMessages p {
+    background-color: #e7f3fe; /* Světle modré pozadí */
+    border: 1px solid #b8daff; /* Světle modrý rámeček */
+    padding: 10px; /* Vnitřní okraje */
+    margin: 10px 0; /* Okraje mezi zprávami */
+    border-radius: 4px; /* Zaoblené rohy */
+}
+
+    </style>
+</head>
+<body>
+    <h1>Vyhledávání uživatelů</h1>
+    <div id="errorMessage" style="color:red;"></div>
+    <div id="successMessage" style="color:green;"></div>
+
+    <form id="searchForm">
+        <label for="searchQuery">Hledat uživatele:</label>
+        <input type="text" id="searchQuery" required>
+        <button type="submit">Hledat</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+        // Příklad dat uživatelů (v reálné aplikaci bys použil data z databáze)
+        const users = [
+            { username: 'BATMAN70', email: 'jardaolaholah@gmail.com', gender: 'Muž' },
+            { username: 'SUPERMAN', email: 'superman@example.com', gender: 'Muž' },
+            { username: 'WONDERWOMAN', email: 'wonderwoman@example.com', gender: 'Žena' }
+        ];
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const query = document.getElementById('searchQuery').value.toLowerCase();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Vymaže předchozí výsledky
+
+            const results = users.filter(user => user.username.toLowerCase().includes(query));
+
+            if (results.length > 0) {
+                results.forEach(user => {
+                    resultsDiv.innerHTML += `<p>Uživatelské jméno: ${user.username}, E-mail: ${user.email}, Pohlaví: ${user.gender}</p>`;
+                });
+            } else {
+                resultsDiv.innerHTML = '<p>Nebyl nalezen žádný uživatel.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
