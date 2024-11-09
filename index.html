@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domovská stránka</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #800080;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background: #4CAF50;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        main {
+            margin-top: 20px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Vítejte na seznamce</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="přihlášení.html">Přihlášení</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="platby.html">Platby</a></li>
+        <li><a href="komentáře.html">Komentáře</a></li>
+        <li><a href="fotky.html">Nahrát profilový obrázek</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h2>Naše seznamka nabízí široké možnosti pro seznamování!</h2>
+    <p>Registrujte se, přihlaste se a začněte komunikovat s ostatními uživateli.</p>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Zpracování URL parametrů
+        const params = new URLSearchParams(window.location.search);
+        const formFields = ['username', 'password', 'birthdate', 'height', 'weight', 'eyes', 'hair', 'children', 'job', 'hobbies', 'orientation', 'search'];
+
+        formFields.forEach(field => {
+            const input = document.getElementById(field);
+            if (input) {
+                input.value = params.get(field) || '';
+            }
+        });
+
+        // Zpracování odeslání formuláře
+        const registrationForm = document.getElementById('registrationForm');
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                alert('Registrace byla úspěšná!');
+                window.location.href = 'profil.html'; 
+            });
+        }
+
+        // Nastavení počtu mincí
+        let userCoins = 200; 
+
+        // Aktualizace stavu tlačítka pro odesílání zpráv
+        function updateSendButtonState() {
+            const sendButton = document.getElementById('sendButton');
+            if (sendButton) {
+                sendButton.disabled = userCoins <= 0; 
+            }
+        }
+
+        updateSendButtonState();
+
+        // Odeslání zprávy
+        const sendButton = document.getElementById('sendButton');
+        if (sendButton) {
+            sendButton.addEventListener('click', function() {
+                const messageInput = document.getElementById('messageInput');
+                const messageDisplay = document.getElementById('messageDisplay');
+
+                if (userCoins > 0 && messageInput.value.trim() !== "") {
+                    userCoins--;
+                    const newMessage = document.createElement('p');
+                    newMessage.textContent = messageInput.value;
+                    messageDisplay.appendChild(newMessage);
+                    messageInput.value = '';
+                    updateSendButtonState();
+                } else if (userCoins <= 0) {
+                    alert("Nemáte dostatek mincí pro odeslání zprávy. Kupte si další mince.");
+                }
+            });
+        }
+    });
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
+
