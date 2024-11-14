@@ -1,6 +1,5 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
 const path = require('path'); // Zajistíme, že path je nactený modul
 const { Pool } = require('pg'); // Importujeme Pool z pg pro práci s databází
 
