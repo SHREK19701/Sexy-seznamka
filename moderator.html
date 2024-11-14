@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat s emotikony</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        #left-column, #right-column {
+            width: 45%;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+
+        #chat-box {
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .profile-info img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+        }
+
+        .stat-item {
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 0.9em;
+            width: 100%;
+            text-align: center;
+        }
+
+        #stats {
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        #message-input {
+            width: calc(100% - 90px);
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            height: 60px;
+        }
+
+        #send-message {
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            height: 60px;
+        }
+
+        #send-message:hover {
+            background-color: #0056b3;
+        }
+
+        .emoji-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 40px;
+            height: 40px;
+        }
+
+        .emoji-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .message {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .message.client {
+            background-color: #e0f7fa;
+        }
+
+        .message.moderator {
+            background-color: #f1f8e9;
+        }
+
+        .stat-item.client-stat {
+            background-color: #800080;
+            color: white;
+        }
+
+        .stat-item.moderator-stat {
+            background-color: #9932cc;
+            color: white;
+        }
+
+        .stat-item.messages-stat {
+            background-color: #ff1493;
+            color: white;
+        }
+
+        .stat-item.total-stat {
+            background-color: #008000;
+            color: white;
+        }
+
+        .stat-item.week-stat {
+            background-color: #b22222;
+            color: white;
+        }
+
+        .chat-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .emoji-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hlavní kontejner pro rozvržení -->
+<div class="container">
+    <!-- Levý sloupec pro klienta -->
+    <div id="left-column">
+        <div class="profile-info">
+            <img src="Jarda.jpg" alt="Jarda" />
+            <h3>Klient 1</h3>
+            <p>Jméno: <span id="client-name">Klient 1</span></p>
+            <p>Věk: <span id="client-age">28</span></p>
+            <p>Město: <span id="client-city">Praha</span></p>
+            <p>Práce: <span id="client-job">Programátor</span></p>
+            <p>Stav: <span id="client-status">Svobodný</span></p>
+            <p>Popis: <span id="client-description">Rád programuju a cestuji.</span></p>
+        </div>
+    </div>
+
+    <!-- Pravý sloupec pro moderátora -->
+    <div id="right-column">
+        <div class="profile-info">
+            <img src="Jana.jpeg" alt="Jana" />
+            <h3>Moderátor 1</h3>
+            <p>Jméno: <span id="moderator-name">Moderátor 1</span></p>
+            <p>Věk: <span id="moderator-age">35</span></p>
+            <p>Město: <span id="moderator-city">Brno</span></p>
+            <p>Práce: <span id="moderator-job">Moderátor</span></p>
+            <p>Stav: <span id="moderator-status">Zadaný</span></p>
+            <p>Popis: <span id="moderator-description">Zodpovědný a nápomocný.</span></p>
+        </div>
+    </div>
+</div>
+
+<!-- Zpráva -->
+<div id="chat-box">
+    <div id="message-container"></div>
+</div>
+
+<!-- Chat input a emoji tlačítko -->
+<div class="chat-container">
+    <input type="text" id="message-input" placeholder="Napište zprávu...">
+    
+    <div class="emoji-container">
+        <button class="emoji-btn" onclick="insertEmoji('❤️')">❤️</button>
+        <button class="emoji-btn" onclick="insertEmoji('💖')">💖</button>
+        <button class="emoji-btn" onclick="insertEmoji('💘')">💘</button>
+        <button class="emoji-btn" onclick="insertEmoji('💝')">💝</button>
+        <button class="emoji-btn" onclick="insertEmoji('💕')">💕</button>
+        <button class="emoji-btn" onclick="insertEmoji('💞')">💞</button>
+        <button class="emoji-btn" onclick="insertEmoji('💓')">💓</button>
+        <button class="emoji-btn" onclick="insertEmoji('💗')">💗</button>
+        <button class="emoji-btn" onclick="insertEmoji('💌')">💌</button>
+        <button class="emoji-btn" onclick="insertEmoji('💋')">💋</button>
+        <button class="emoji-btn" onclick="insertEmoji('🥰')">🥰</button>
+        <button class="emoji-btn" onclick="insertEmoji('😘')">😘</button>
+        <button class="emoji-btn" onclick="insertEmoji('😍')">😍</button>
+        <button class="emoji-btn" onclick="insertEmoji('😊')">😊</button>
+        <button class="emoji-btn" onclick="insertEmoji('😁')">😁</button>
+        <button class="emoji-btn" onclick="insertEmoji('😂')">😂</button>
+        <button class="emoji-btn" onclick="insertEmoji('😍')">😍</button>
+        <button class="emoji-btn" onclick="insertEmoji('😜')">😜</button>
+        <button class="emoji-btn" onclick="insertEmoji('😎')">😎</button>
+        <button class="emoji-btn" onclick="insertEmoji('😢')">😢</button>
+        <button class="emoji-btn" onclick="insertEmoji('😇')">😇</button>
+        <button class="emoji-btn" onclick="insertEmoji('🥺')">🥺</button>
+        <button class="emoji-btn" onclick="insertEmoji('🤔')">🤔</button>
+        <button class="emoji-btn" onclick="insertEmoji('😱')">😱</button>
+        <button class="emoji-btn" onclick="insertEmoji('😈')">😈</button>
+        <button class="emoji-btn" onclick="insertEmoji('🦄')">🦄</button>
+       <button class="emoji-btn" onclick="insertEmoji('🌈')">🌈</button>
+       <button class="emoji-btn" onclick="insertEmoji('🔥')">🔥</button>
+       <button class="emoji-btn" onclick="insertEmoji('🎉')">🎉</button>
+       <button class="emoji-btn" onclick="insertEmoji('🥳')">🥳</button>
+       <button class="emoji-btn" onclick="insertEmoji('👑')">👑</button>
+       <button class="emoji-btn" onclick="insertEmoji('👀')">👀</button>
+       <button class="emoji-btn" onclick="insertEmoji('👻')">👻</button>
+       <button class="emoji-btn" onclick="insertEmoji('🐶')">🐶</button>
+       <button class="emoji-btn" onclick="insertEmoji('🐱')">🐱</button>
+       <button class="emoji-btn" onclick="insertEmoji('🐯')">🐯</button>
+       <button class="emoji-btn" onclick="insertEmoji('🦊')">🦊</button>
+       <button class="emoji-btn" onclick="insertEmoji('🐼')">🐼</button>
+       <button class="emoji-btn" onclick="insertEmoji('🐻')">🐻</button>
+    </div>
+
+    <!-- Tlačítko pro odeslání zprávy -->
+    <button id="send-message" onclick="sendMessage()">Odeslat zprávu</button>
+</div>
+
+<!-- Statistika -->
+<div id="stats">
+    <div class="stat-item client-stat" id="stat-client">Počet klientů: <span id="total-clients">0</span></div>
+    <div class="stat-item moderator-stat" id="stat-moderators">Počet moderátorů: <span id="total-moderators">1</span></div>
+    <div class="stat-item messages-stat">Počet zpráv dnes: <span id="total-messages-today">0</span></div>
+    <div class="stat-item total-stat">Počet zpráv celkem: <span id="total-messages-week">0</span></div>
+</div>
+
+<ul>
+    <a href="index.html?role=klient">Přejít na domovskou stránku</a>
+</ul>
+
+<script>
+    const messageInput = document.getElementById('message-input');
+    const messageContainer = document.getElementById('message-container');
+    const totalMessagesToday = document.getElementById('total-messages-today');
+    const totalMessagesWeek = document.getElementById('total-messages-week');
+    const totalClients = document.getElementById('total-clients');
+    const totalModerators = document.getElementById('total-moderators');
+
+    let clientMessageCount = 0;
+    let moderatorMessageCount = 0;
+
+    // Funkce pro přidání smajlíka do zprávy
+    function insertEmoji(emoji) {
+        messageInput.value += emoji;
+    }
+
+    // Funkce pro odeslání zprávy
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (message !== "") {
+            const isModerator = true; // Například 1 znamená moderátor, 0 klient
+            const messageClass = isModerator ? "moderator" : "client";
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', messageClass);
+            messageDiv.textContent = message;
+            messageContainer.appendChild(messageDiv);
+
+            // Po odeslání zprávy zvyšujeme počet zpráv
+            if (isModerator) {
+                moderatorMessageCount++;
+            } else {
+                clientMessageCount++;
+            }
+
+            // Aktualizujeme statistiky
+            updateStats();
+
+            // Vyčistíme pole pro zprávu
+            messageInput.value = "";
+        }
+    }
+
+    // Funkce pro aktualizaci statistik
+    function updateStats() {
+        totalMessagesToday.textContent = clientMessageCount + moderatorMessageCount;
+        totalMessagesWeek.textContent = clientMessageCount + moderatorMessageCount;
+    }
+</script>
+
+</body>
+</html>
+

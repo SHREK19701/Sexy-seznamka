@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat s emotikony a mincemi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        #messages {
+            height: 200px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .message {
+            background-color: #f1f1f1;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            resize: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        #sendButton {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #sendButton:hover {
+            background-color: #45A049;
+        }
+        #emojiList {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #emojiList span {
+            font-size: 30px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        #emojiList span:hover {
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+        .balance {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Chat s emotikony a mincemi</h2>
+        <div id="messages"></div>
+        <textarea id="messageInput" placeholder="Napište zprávu..." rows="4"></textarea>
+        <button id="sendButton" onclick="sendMessage()">Odeslat zprávu</button>
+    </div>
+
+    <div id="emojiList">
+        <span onclick="addEmoji('😊')">😊</span>
+        <span onclick="addEmoji('😍')">😍</span>
+        <span onclick="addEmoji('😘')">😘</span>
+        <span onclick="addEmoji('😎')">😎</span>
+        <span onclick="addEmoji('😂')">😂</span>
+        <span onclick="addEmoji('😊')">😊</span>
+        <span onclick="addEmoji('😁')">😁</span>
+        <span onclick="addEmoji('😢')">😢</span>
+        <span onclick="addEmoji('😇')">😇</span>
+        <span onclick="addEmoji('🥺')">🥺</span>
+        <span onclick="addEmoji('🤔')">🤔</span>
+        <span onclick="addEmoji('😱')">😱</span>
+        <span onclick="addEmoji('😈')">😈</span>
+        <span onclick="addEmoji('😋')">😋</span>
+        <span onclick="addEmoji('💖')">💖</span>
+        <span onclick="addEmoji('💘')">💘</span>
+        <span onclick="addEmoji('💝')">💝</span>
+        <span onclick="addEmoji('🦄')">🦄</span>
+        <span onclick="addEmoji('🌈')">🌈</span>
+        <span onclick="addEmoji('🔥')">🔥</span>
+        <span onclick="addEmoji('🎉')">🎉</span>
+        <span onclick="addEmoji('🥳')">🥳</span>
+        <span onclick="addEmoji('👑')">👑</span>
+        <span onclick="addEmoji('👀')">👀</span>
+        <span onclick="addEmoji('👻')">👻</span>
+        <span onclick="addEmoji('🐶')">🐶</span>
+        <span onclick="addEmoji('🐱')">🐱</span>
+        <span onclick="addEmoji('🐯')">🐯</span>
+        <span onclick="addEmoji('🦊')">🦊</span>
+        <span onclick="addEmoji('🐼')">🐼</span>
+        <span onclick="addEmoji('🐻')">🐻</span>
+    </div>
+
+    <button onclick="toggleEmojiList()">Zobrazit smajlíky</button>
+
+    <div class="balance">
+        <p>Vaše mince: <span id="coinBalance"></span></p>
+    </div>
+
+    <script>
+        let coinBalance;
+
+        // Funkce pro inicializaci mincí z localStorage nebo nastavení výchozí hodnoty
+        function initializeCoins() {
+            // Zkontrolujeme, jestli jsou mince již uloženy v localStorage
+            if (localStorage.getItem('coinBalance')) {
+                coinBalance = parseInt(localStorage.getItem('coinBalance'));
+            } else {
+                // Pokud ne, nastavíme výchozí hodnotu
+                coinBalance = 500;
+                localStorage.setItem('coinBalance', coinBalance); // Uložení mincí do localStorage
+            }
+            // Aktualizujeme zobrazení mincí
+            document.getElementById('coinBalance').textContent = coinBalance;
+        }
+
+        // Funkce pro odeslání zprávy
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+
+            if (coinBalance >= 50) { // Ověření, zda má uživatel dostatek mincí
+                if (message) {
+                    // Odečítáme 50 mincí za odeslání zprávy
+                    coinBalance -= 50;
+                    localStorage.setItem('coinBalance', coinBalance); // Uložení nové hodnoty mincí
+                    document.getElementById('coinBalance').textContent = coinBalance;
+
+                    var messageDisplay = document.getElementById('messages');
+                    var newMessage = document.createElement('div');
+                    newMessage.className = 'message';
+                    newMessage.textContent = message;
+                    messageDisplay.appendChild(newMessage);
+                    document.getElementById('messageInput').value = ''; // Vymaže textové pole po odeslání
+                }
+            } else {
+                alert('Nemáte dostatek mincí pro odeslání zprávy!');
+            }
+        }
+
+        // Funkce pro zobrazení a skrytí seznamu smajlíků
+        function toggleEmojiList() {
+            var emojiList = document.getElementById('emojiList');
+            emojiList.style.display = (emojiList.style.display === 'none' || emojiList.style.display === '') ? 'block' : 'none';
+        }
+
+        // Funkce pro přidání smajlíka do textového pole
+        function addEmoji(emoji) {
+            var messageInput = document.getElementById('messageInput');
+            messageInput.value += emoji;
+        }
+
+        // Inicializujeme mince při načtení stránky
+        window.onload = initializeCoins;
+    </script>
+
+</body>
+</html>
+

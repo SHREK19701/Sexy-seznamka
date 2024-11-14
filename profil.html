@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>klient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .profile-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        #profileImage {
+            display: none;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        #uploadButton {
+            background-color: #4CAF50; /* Zelená */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #uploadButton:hover {
+            background-color: #45a049; /* Tmavší zelená při najetí myší */
+        }
+        #message {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <h1>Profil</h1>
+        <input type="file" id="profileImageInput" accept="image/*">
+        <img id="profileImage" src="" alt="Profilový obrázek" />
+        <button id="uploadButton">Nahrát obrázek</button>
+        <div id="message"></div>
+    </div>
+
+    <ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="přihlášení.html">Přihlášení</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="koupit mince.html">Koupit mince</a></li>
+        <li><a href="komentáře.html">Komentáře</a></li>
+        <li><a href="index.html">Index</a></li>
+    </ul>
+
+    <h1>Profil uživatele</h1>
+    <div class="profile-container">
+        <p><strong>Email:</strong> <span id="email">neuvedeno</span></p>
+        <p><strong>Datum narození:</strong> <span id="birthdate">neuvedeno</span></p>
+        <p><strong>Výška:</strong> <span id="height">neuvedeno</span> cm</p>
+        <p><strong>Váha:</strong> <span id="weight">neuvedeno</span> kg</p>
+        <p><strong>Barva očí:</strong> <span id="eyes">neuvedeno</span></p>
+        <p><strong>Barva vlasů:</strong> <span id="hair">neuvedeno</span></p>
+        <p><strong>Počet dětí:</strong> <span id="children">neuvedeno</span></p>
+        <p><strong>Zaměstnání:</strong> <span id="job">neuvedeno</span></p>
+        <p><strong>Koníčky:</strong> <span id="hobbies">neuvedeno</span></p>
+        <p><strong>Sexuální orientace:</strong> <span id="orientation">neuvedeno</span></p>
+        <p><strong>Koho hledáte:</strong> <span id="search">neuvedeno</span></p>
+        <p><strong>Počet mincí:</strong> <span id="coins-display">neuvedeno</span></p>
+    </div>
+
+    <script>
+        // Načíst obrázek z localStorage při načítání stránky
+        window.onload = function() {
+            const savedImage = localStorage.getItem('profileImage');  // Získat obrázek z localStorage
+            if (savedImage) {
+                const profileImage = document.getElementById('profileImage');
+                profileImage.src = savedImage;  // Nastavit src na uložený obrázek
+                profileImage.style.display = 'block';  // Zobrazit obrázek
+            }
+
+            // Načíst profilová data
+            const userData = JSON.parse(localStorage.getItem('userProfile'));
+            const userCoins = localStorage.getItem('coins');
+
+            // Pokud data existují, zobrazí se na stránce
+            if (userData) {
+                document.getElementById('email').textContent = userData.email || 'neuvedeno';
+                document.getElementById('birthdate').textContent = userData.birthdate || 'neuvedeno';
+                document.getElementById('height').textContent = userData.height || 'neuvedeno';
+                document.getElementById('weight').textContent = userData.weight || 'neuvedeno';
+                document.getElementById('eyes').textContent = userData.eyes || 'neuvedeno';
+                document.getElementById('hair').textContent = userData.hair || 'neuvedeno';
+                document.getElementById('children').textContent = userData.children || 'neuvedeno';
+                document.getElementById('job').textContent = userData.job || 'neuvedeno';
+                document.getElementById('hobbies').textContent = userData.hobbies || 'neuvedeno';
+                document.getElementById('orientation').textContent = userData.orientation || 'neuvedeno';
+                document.getElementById('search').textContent = userData.search || 'neuvedeno';
+                document.getElementById('coins-display').textContent = userCoins || 'neuvedeno';
+            }
+        };
+
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('profileImageInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Prosím vyberte soubor.");
+                return;
+            }
+
+            console.log("Soubor vybrán:", file);  // Debug: zkontrolujte, zda soubor existuje
+
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const imageData = reader.result;  // Získat obrázek jako data URL
+
+                // Uložit obrázek do localStorage
+                localStorage.setItem('profileImage', imageData);
+
+                // Zobrazit obrázek na stránce
+                const profileImage = document.getElementById('profileImage');
+                profileImage.src = imageData;
+                profileImage.style.display = 'block';  // Zobrazit obrázek
+
+                // Zobrazit zprávu
+                const message = document.getElementById('message');
+                message.textContent = "Obrázek byl úspěšně nahrán!";
+                message.style.color = "green";  // Úspěšná zpráva
+            };
+            reader.onerror = function () {
+                alert("Došlo k chybě při čtení souboru.");
+            };
+            reader.readAsDataURL(file);  // Číst soubor jako data URL
+        });
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

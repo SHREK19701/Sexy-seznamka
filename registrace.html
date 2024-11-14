@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrace</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* Tmavší pozadí */
+            color: #fff; /* Světlejší text pro lepší kontrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #444; /* Tmavší pozadí pro formulář */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            width: 100%;
+            max-width: 320px; /* Zmenšení šířky formuláře */
+            overflow-y: auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px; /* Zmenšení velikosti titulku */
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 12px; /* Zmenšení velikosti textu pro label */
+            margin: 6px 0 3px;
+            color: #ccc; /* Světlejší barva pro texty labelů */
+        }
+        input {
+            padding: 5px 10px; /* Zmenšení výšky políček */
+            font-size: 12px; /* Zmenšení písma pro lepší přehlednost */
+            margin-bottom: 8px; /* Zkrácení mezery mezi poli */
+            border: 1px solid #666; /* Tmavší rámeček */
+            border-radius: 4px;
+            width: 100%;
+            background-color: #555; /* Tmavší pozadí pro vstupní pole */
+            color: #fff; /* Světlejší text ve vstupních polích */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+            outline: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .footer-links {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px; /* Zmenšení velikosti písma pro odkazy */
+        }
+        .footer-links a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .coin-info {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Registrace</h1>
+
+    <form id="registrationForm">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" required placeholder="Zadejte e-mail">
+
+        <label for="username">Uživatelské jméno</label>
+        <input type="text" id="username" required placeholder="Zadejte uživatelské jméno">
+
+        <label for="password">Heslo</label>
+        <input type="password" id="password" required placeholder="Zadejte heslo">
+
+        <label for="birthdate">Datum narození</label>
+        <input type="date" id="birthdate" required>
+
+        <label for="height">Výška (cm)</label>
+        <input type="number" id="height" required>
+
+        <label for="weight">Váha (kg)</label>
+        <input type="number" id="weight" required>
+
+        <label for="eyes">Barva očí</label>
+        <input type="text" id="eyes" required placeholder="Zadejte barvu očí">
+
+        <label for="hair">Barva vlasů</label>
+        <input type="text" id="hair" required placeholder="Zadejte barvu vlasů">
+
+        <label for="children">Počet dětí</label>
+        <input type="number" id="children" required>
+
+        <label for="job">Zaměstnání</label>
+        <input type="text" id="job" required placeholder="Zadejte zaměstnání">
+
+        <label for="hobbies">Koníčky</label>
+        <input type="text" id="hobbies" required placeholder="Zadejte koníčky">
+
+        <label for="orientation">Sexuální orientace</label>
+        <input type="text" id="orientation" required placeholder="Zadejte sexuální orientaci">
+
+        <label for="search">Koho hledám</label>
+        <input type="text" id="search" required placeholder="Zadejte, koho hledáte">
+
+        <button type="submit" id="registerButton">Registrovat</button>
+    </form>
+
+    <div class="coin-info">
+        <p>Počet mincí: <span id="coins">0</span></p>
+    </div>
+
+    <div class="footer-links">
+        <a href="přihlášení.html">Přihlášení</a>
+        <a href="profil.html">Profil</a>
+        <a href="chat.html">Chat</a>
+        <a href="koupit mince.html">Koupit mince</a>
+        <a href="komentáře.html">Komentáře</a>
+        <a href="index.html">Index</a>
+    </div>
+</div>
+
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const birthdate = document.getElementById('birthdate').value;
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const eyes = document.getElementById('eyes').value;
+    const hair = document.getElementById('hair').value;
+    const children = document.getElementById('children').value;
+    const job = document.getElementById('job').value;
+    const hobbies = document.getElementById('hobbies').value;
+    const orientation = document.getElementById('orientation').value;
+    const search = document.getElementById('search').value;
+
+    // Uložení dat do localStorage s bonusovými mincemi
+    localStorage.setItem('userProfile', JSON.stringify({
+        email,
+        username,
+        password,
+        birthdate,
+        height,
+        weight,
+        eyes,
+        hair,
+        children,
+        job,
+        hobbies,
+        orientation,
+        search,
+        coins: 500 // Bonus 500 mincí
+    }));
+
+    // Uložení bonusu 500 mincí přímo do localStorage pro zobrazení
+    localStorage.setItem('userCoins', 500);
+
+    alert("Bonus 500 mincí byl přidán na váš účet!");
+
+    // Přesměrování po registraci
+    window.location.href = 'profil.html';
+});
+
+// Zobrazení mincí na stránce po přihlášení nebo přesměrování
+window.addEventListener('load', function() {
+    const coins = localStorage.getItem('userCoins');
+    if (coins) {
+        document.getElementById('coins').innerText = coins;
+    } else {
+        document.getElementById('coins').innerText = '0';
+    }
+});
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="cs">
+<style>
+/* Základní reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+/* Hlavička */
+.header {
+    background-color: #800080;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Hlavní obsah */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+/* Sekce registrace */
+.registration-section {
+    background-color: #fff;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registration-section h2 {
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #333;
+}
+
+input[type="text"], input[type="password"], input[type="number"], input[type="date"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Tlačítko registrace */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platby - Naděje nekončí</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>Platby</h1>
+    </header>    
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nákup mincí</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Nákup mincí</h1>
+    </header>
+    
+    <main>
+        <h2>Vyberte počet mincí k zakoupení a klikněte na tlačítko koupit, v poli quantity si vyberte číslo od (1-20)
+        (č1 =´500 mincí) (č 20 = 10000 mincí!):</h2>
+        <select id="coinQuantity" onchange="updatePrice()">
+            <option value="0">Vyberte množství</option>
+            <option value="500">500 mincí / 250 Kč</option>
+            <option value="1000">1000 mincí / 500 Kč</option>
+            <option value="1500">1500 mincí / 750 Kč</option>
+            <option value="2000">2000 mincí / 1000 Kč</option>
+            <option value="2500">2500 mincí / 1250 Kč</option>
+            <option value="3000">3000 mincí / 1500 Kč</option>
+            <option value="3500">3500 mincí / 1750 Kč</option>
+            <option value="4000">4000 mincí / 2000 Kč</option>
+            <option value="4500">4500 mincí / 2250 Kč</option>
+            <option value="5000">5000 mincí / 2500 Kč</option>
+            <option value="5500">5500 mincí / 2750 Kč</option>
+            <option value="6000">6000 mincí / 3000 Kč</option>
+            <option value="6500">6500 mincí / 3250 Kč</option>
+            <option value="7000">7000 mincí / 3500 Kč</option>
+            <option value="7500">7500 mincí / 3750 Kč</option>
+            <option value="8000">8000 mincí / 4000 Kč</option>
+            <option value="8500">8500 mincí / 4250 Kč</option>
+            <option value="9000">9000 mincí / 4500 Kč</option>
+            <option value="9500">9500 mincí / 4750 Kč</option>
+            <option value="10000">10000 mincí / 5000 Kč</option>
+        </select>
+    
+    </main>
+    <main class="main-content">
+        <section class="payment-section">
+            <p>Pro zakoupení mincí klikněte na tlačítko níže:</p>
+            <a href="https://www.paypal.com/ncp/payment/76E9F6NKHAPVU" method="post" target="_top" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+  <input class="pp-76E9F6NKHAPVU" type="submit" value="Koupit" />
+  <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+  <section> Využívá službu <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+</form></a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy;Sexy-seznamka</p>
+    </footer>
+    <ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="přihlášení.html">Přihlášení</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="komentáře.html">Komentáře</a></li>
+        <li><a href="index.html">Index</a></li>
+    </ul>
+<script>
+
+ // Uložíme data uživatele do db_url
+ 
+ db_url.setItem('userCoins = 200', userCoins = 200);
+ db_url.setItem('coinPrice = 250', coinPrice = 250);
+// Inicializace mincí pro nově registrované uživatele
+let userCoins = 200; // Bonus pro nově registrované uživatele
+const coinPrice = 250; // Cena za 500 mincí
+
+// Funkce pro výpočet celkových nákladů
+function calculateTotalCost(quantity) {
+    return (quantity / 500) * coinPrice;
+}
+
+// Funkce pro nákup mincí
+function purchaseCoins(quantity) {
+    if (quantity % 500 !== 0 || quantity <= 0) {
+        alert("Můžete zakoupit pouze násobky 500 mincí.");
+        return;
+    }
+
+    const totalCost = calculateTotalCost(quantity);
+    // Zde bys měl implementovat platbu (např. PayPal)
+    console.log(`Celková cena za ${quantity} mincí: ${totalCost} Kč`);
+    
+    // Představuji, že uživatel úspěšně zaplatil
+    userCoins += quantity; // Přidání zakoupených mincí
+    alert(`Úspěšně jste zakoupili ${quantity} mincí! Nyní máte celkem ${userCoins} mincí.`);
+}
+
+// Funkce pro aktualizaci ceny na základě vybraného množství
+function updatePrice() {
+    const quantity = Number(document.getElementById('coinQuantity').value);
+    const totalCost = calculateTotalCost(quantity);
+    document.getElementById('result').innerText = `Celková cena za ${quantity} mincí: ${totalCost} Kč`;
+}
+// Inicializace Stripe
+const stripe = Stripe('51QG24xAsqZIp6zSLLG8bHQ0JBZKhG0pIs14OfPA52oLYPmTh6ZftIlwgDbuwHM87RaV7XiqWGGmA1rin3z0mhDlf00SSA8UOsv'); // Zde zadej svůj veřejný klíč
+const elements = stripe.elements();
+
+// Vytvoření prvku pro kartu
+const cardElement = elements.create('card');
+cardElement.mount('#card-element');
+
+// Zpracování platby
+const form = document.getElementById('payment-form');
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+    });
+
+    if (error) {
+        // Zobrazení chyby
+        document.getElementById('card-errors').textContent = error.message;
+    } else {
+        // Platba byla úspěšná
+        document.getElementById('result').textContent = `Úspěšně zaplaceno: ${paymentMethod.id}`;
+        // Zde můžeš přidat další logiku, např. odeslání dat na server
+    }
+});
+
+</script>
+<script src="app.js"></script>
+</body>
+</html>
+

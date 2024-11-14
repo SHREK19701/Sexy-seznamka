@@ -61,73 +61,120 @@
         <li><a href="přihlášení.html">Přihlášení</a></li>
         <li><a href="profil.html">Profil</a></li>
         <li><a href="chat.html">Chat</a></li>
-        <li><a href="platby.html">Platby</a></li>
+        <li><a href="koupit mince.html">Koupit mince</a></li>
         <li><a href="komentáře.html">Komentáře</a></li>
-        <li><a href="fotky.html">Nahrát profilový obrázek</a></li>
+        <li><a href="moderator.html">Moderator</a></li>
     </ul>
 </nav>
-
-<main>
+    <main>
     <h2>Naše seznamka nabízí široké možnosti pro seznamování!</h2>
     <p>Registrujte se, přihlaste se a začněte komunikovat s ostatními uživateli.</p>
 </main>
-
+ <a href="https://www.paypal.com/donate/?hosted_button_id=BKGEV9E8ACXXJ" target="_blank">Podpořte hladující děti v Africe přes PayPal</a>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Zpracování URL parametrů
-        const params = new URLSearchParams(window.location.search);
-        const formFields = ['username', 'password', 'birthdate', 'height', 'weight', 'eyes', 'hair', 'children', 'job', 'hobbies', 'orientation', 'search'];
+   document.addEventListener("DOMContentLoaded", function() {
+  const sendMessageButton = document.getElementById('send-message');
+  const messageInput = document.getElementById('message-input');
+  const chatBox = document.getElementById('chat-box').querySelector('.message-box');
 
-        formFields.forEach(field => {
-            const input = document.getElementById(field);
-            if (input) {
-                input.value = params.get(field) || '';
-            }
-        });
+  // Statistické údaje
+  let totalMessages = 0;  // Celkový počet zpráv
+  let totalAnswers = 0;   // Celkový počet odpovědí
+  let dailyMessages = 0;  // Počet zpráv za dnešek
+  let dailyAnswers = 0;   // Počet odpovědí za dnešek
 
-        // Zpracování odeslání formuláře
-        const registrationForm = document.getElementById('registrationForm');
-        if (registrationForm) {
-            registrationForm.addEventListener('submit', function(event) {
-                event.preventDefault(); 
-                alert('Registrace byla úspěšná!');
-                window.location.href = 'profil.html'; 
-            });
-        }
+  // Klient
+  const clientNameElement = document.getElementById('client-name');
+  const clientAgeElement = document.getElementById('client-age');
+  const clientCityElement = document.getElementById('client-city');
+  const clientDescriptionElement = document.getElementById('client-description');
+  const clientJobElement = document.getElementById('client-job');
+  const clientEducationElement = document.getElementById('client-education');
+  const clientOrientationElement = document.getElementById('client-orientation');
+  const clientSearchingElement = document.getElementById('client-searching');
 
-        // Nastavení počtu mincí
-        let userCoins = 200; 
+  // Moderátor
+  const moderatorNameElement = document.getElementById('moderator-name');
+  const moderatorAgeElement = document.getElementById('moderator-age');
+  const moderatorCityElement = document.getElementById('moderator-city');
+  const moderatorDescriptionElement = document.getElementById('moderator-description');
+  const moderatorJobElement = document.getElementById('moderator-job');
+  const moderatorEducationElement = document.getElementById('moderator-education');
+  const moderatorOrientationElement = document.getElementById('moderator-orientation');
+  const moderatorSearchingElement = document.getElementById('moderator-searching');
 
-        // Aktualizace stavu tlačítka pro odesílání zpráv
-        function updateSendButtonState() {
-            const sendButton = document.getElementById('sendButton');
-            if (sendButton) {
-                sendButton.disabled = userCoins <= 0; 
-            }
-        }
+  // Funkce pro úpravu profilů
+  function editProfile(element, label) {
+    const newValue = prompt(`Zadejte nové ${label}:`, element.innerText);
+    if (newValue !== null && newValue.trim() !== "") {
+      element.innerText = newValue.trim();
+    }
+  }
 
-        updateSendButtonState();
+  // Upravování klienta
+  document.getElementById('edit-client-name').addEventListener('click', () => editProfile(clientNameElement, 'jméno'));
+  document.getElementById('edit-client-age').addEventListener('click', () => editProfile(clientAgeElement, 'věk'));
+  document.getElementById('edit-client-city').addEventListener('click', () => editProfile(clientCityElement, 'město'));
+  document.getElementById('edit-client-description').addEventListener('click', () => editProfile(clientDescriptionElement, 'popis'));
+  document.getElementById('edit-client-job').addEventListener('click', () => editProfile(clientJobElement, 'práce'));
+  document.getElementById('edit-client-education').addEventListener('click', () => editProfile(clientEducationElement, 'vzdělání'));
+  document.getElementById('edit-client-orientation').addEventListener('click', () => editProfile(clientOrientationElement, 'sexuální orientace'));
+  document.getElementById('edit-client-searching').addEventListener('click', () => editProfile(clientSearchingElement, 'hledám'));
 
-        // Odeslání zprávy
-        const sendButton = document.getElementById('sendButton');
-        if (sendButton) {
-            sendButton.addEventListener('click', function() {
-                const messageInput = document.getElementById('messageInput');
-                const messageDisplay = document.getElementById('messageDisplay');
+  // Upravování moderátora
+  document.getElementById('edit-moderator-name').addEventListener('click', () => editProfile(moderatorNameElement, 'jméno'));
+  document.getElementById('edit-moderator-age').addEventListener('click', () => editProfile(moderatorAgeElement, 'věk'));
+  document.getElementById('edit-moderator-city').addEventListener('click', () => editProfile(moderatorCityElement, 'město'));
+  document.getElementById('edit-moderator-description').addEventListener('click', () => editProfile(moderatorDescriptionElement, 'popis'));
+  document.getElementById('edit-moderator-job').addEventListener('click', () => editProfile(moderatorJobElement, 'práce'));
+  document.getElementById('edit-moderator-education').addEventListener('click', () => editProfile(moderatorEducationElement, 'vzdělání'));
+  document.getElementById('edit-moderator-orientation').addEventListener('click', () => editProfile(moderatorOrientationElement, 'sexuální orientace'));
+  document.getElementById('edit-moderator-searching').addEventListener('click', () => editProfile(moderatorSearchingElement, 'hledám'));
 
-                if (userCoins > 0 && messageInput.value.trim() !== "") {
-                    userCoins--;
-                    const newMessage = document.createElement('p');
-                    newMessage.textContent = messageInput.value;
-                    messageDisplay.appendChild(newMessage);
-                    messageInput.value = '';
-                    updateSendButtonState();
-                } else if (userCoins <= 0) {
-                    alert("Nemáte dostatek mincí pro odeslání zprávy. Kupte si další mince.");
-                }
-            });
-        }
-    });
+  // Funkce pro odeslání zprávy
+  function sendMessage() {
+    const message = messageInput.value.trim();
+    if (message !== "") {
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      chatBox.appendChild(messageElement);
+      messageInput.value = ''; // Vymazat pole pro nový text
+
+      // Aktualizace statistik
+      totalMessages++;
+      dailyMessages++;
+      totalAnswers++; // Počet odpovědí (pokud je to potřeba)
+      dailyAnswers++; // Denní odpovědi (pokud je to potřeba)
+
+      // Aktualizace na stránce
+      updateStats();
+    }
+  }
+
+  // Funkce pro aktualizaci statistik
+  function updateStats() {
+    document.getElementById('total-messages').textContent = totalMessages;
+    document.getElementById('total-answers').textContent = totalAnswers;
+    document.getElementById('daily-messages').textContent = dailyMessages;
+    document.getElementById('daily-answers').textContent = dailyAnswers;
+  }
+
+  // Smajlíky
+  window.insertEmoji = function(emoji) {
+    messageInput.value += emoji;
+  }
+
+  // Odeslání zprávy po stisknutí tlačítka
+  sendMessageButton.addEventListener('click', sendMessage);
+
+  // Odeslání zprávy po stisknutí Enter
+  messageInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  });
+});
+
 </script>
 
 <script src="app.js"></script>

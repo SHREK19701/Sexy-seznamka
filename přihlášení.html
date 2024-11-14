@@ -5,45 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Přihlášení</title>
     <style>
-        /* Zde můžeš přidat styly */
+        /* Základní reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        .header {
+            background-color: #800080;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+        .login-section {
+            background-color: #fff;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login-section h2 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+            text-align: center;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-    <h1>Přihlášení</h1>
-    <div id="errorMessage" style="color:red;"></div>
-    <div id="successMessage" style="color:green;"></div>
-    
-    <form id="loginForm">
-        <label for="username">Uživatelské jméno:</label>
-        <input type="text" id="username" required><br>
 
-        <label for="password">Heslo:</label>
-        <input type="password" id="password" required><br>
+    <header class="header">
+        <h1>Přihlášení</h1>
+    </header>
 
-        <button type="submit">Přihlásit se</button>
-    </form>
+    <main class="main-content">
+        <section class="login-section">
+            <form id="loginForm">
+                <label for="username">Jméno:</label>
+                <input type="text" id="username" name="username" required>
 
+                <label for="password">Heslo:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Přihlásit se</button>
+            </form>
+            <p id="loginMessage"></p>
+        </section>
+    </main>
+<nav>
+    <ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="koupit mince.html">Koupit mince</a></li>
+        <li><a href="komentáře.html">Komentáře</a></li>
+        <li><a href="index.html">Index</a></li>
+    </ul>
+</nav>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Zamezí odeslání formuláře
+        // Předdefinované přihlašovací údaje (pro účely testování)
+        const validUsername = 'BATMAN70';
+        const validPassword = '112233';
 
-            // Získání hodnot formuláře
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Zabráníme standardnímu odeslání formuláře
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
 
-            // Zde budeš muset implementovat logiku pro kontrolu přihlašovacích údajů.
-            // Prozatím použijeme jednoduchou kontrolu pro demonstraci.
+            // Kontrola přihlašovacích údajů
+            if (username === validUsername && password === validPassword) {
+                // Uložení přihlášení do localStorage
+                localStorage.setItem('loggedIn', true);
+                localStorage.setItem('username', username);
 
-            if (username === "BATMAN70" && password === "Charalamba11@") { // Zde nahraďte s registrací
-                successMessage.innerHTML = 'Úspěšně přihlášeno!';
-                errorMessage.innerHTML = ''; // Vymaže chybovou zprávu
+                // Zobrazení úspěšné zprávy
+                document.getElementById('loginMessage').textContent = 'Byli jste úspěšně přihlášeni!';
+                document.getElementById('loginMessage').style.color = 'green';
+
+                // Přesměrování na jinou stránku (např. na chat)
+                setTimeout(function() {
+                    window.location.href = 'chat.html'; // Nahraďte vlastní cílovou stránkou
+                }, 2000); // Po 2 sekundách přesměrování na chat
             } else {
-                errorMessage.innerHTML = 'Chybné uživatelské jméno nebo heslo.';
-                successMessage.innerHTML = ''; // Vymaže úspěšnou zprávu
+                // Zobrazení chybové zprávy
+                document.getElementById('loginMessage').textContent = 'Chybné přihlašovací údaje, zkuste to prosím znovu.';
+                document.getElementById('loginMessage').style.color = 'red';
             }
         });
     </script>
+
 </body>
 </html>
+

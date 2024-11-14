@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komentáře - Naděje nekončí</title>
+    <style>
+        /* Základní reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        /* Hlavička */
+        .header {
+            background-color: #800080;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Hlavní obsah */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        /* Sekce komentářů */
+        .comments-section {
+            background-color: #fff;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comments-list {
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .comment button {
+            background: transparent;
+            border: none;
+            color: #d9534f;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Komentáře</h1>
+    </header>
+
+    <main class="main-content">
+        <section class="comments-section">
+            <div class="comments-list" id="commentsList">
+                <!-- Zde budou zobrazeny komentáře -->
+            </div>
+            <textarea id="commentInput" placeholder="Přidejte svůj komentář..." rows="3"></textarea>
+            <button onclick="addComment()">Odeslat</button>
+        </section>
+    </main>
+<ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="přihlášení.html">Přihlášení</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="koupit mince.html">Koupit mince</a></li>
+        <li><a href="index.html">Index</a></li>
+    </ul>
+    <script>
+        function addComment() {
+            const commentInput = document.getElementById("commentInput");
+            const comment = commentInput.value.trim();
+
+            if (!comment) {
+                alert("Prosím, napište komentář."); // Oznámení pro prázdný vstup
+                return;
+            }
+
+            const commentsList = document.getElementById("commentsList");
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+
+            const currentDate = new Date();
+            const dateString = currentDate.toLocaleString(); // Získání data a času
+
+            commentElement.innerHTML = `
+                <p>${comment}</p>
+                <small>${dateString}</small>
+                <button onclick="removeComment(this)">X</button>
+            `;
+            commentsList.appendChild(commentElement);
+            commentInput.value = "";
+        }
+
+        function removeComment(button) {
+            const commentElement = button.parentElement;
+            commentElement.remove(); // Odstranění komentáře
+        }
+    </script>
+<script src="app.js"></script>
+</body>
+</html>
+
