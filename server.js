@@ -1,35 +1,35 @@
 const express = require('express');
 const http = require('http');
-const path = require('path'); // Zajistíme, že path je nactený modul
+const path = require('path'); // ZajistÃ­me, Å¾e path je nactenÃ½ modul
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 const port = 10000;
 
-// Konfigurace databázového poolu
+// Konfigurace databÃ¡zovÃ©ho poolu
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'db_url',
     password: 'Charalamba11@',
-    port: 5432, // nebo váš vlastní port
+    port: 5432, // nebo vÃ¡Å¡ vlastnÃ­ port
 });
 
-// Overení pripojení k databázi
+// OverenÃ­ pripojenÃ­ k databÃ¡zi
 pool.connect()
     .then(client => {
-        console.log('Pripojeno k databázi');
-        client.release(); // Uvolníme klienta zpet do poolu
+        console.log('Pripojeno k databÃ¡zi');
+        client.release(); // UvolnÃ­me klienta zpet do poolu
     })
     .catch(err => {
-        console.error('Chyba pri pripojování k databázi:', err.stack);
+        console.error('Chyba pri pripojovÃ¡nÃ­ k databÃ¡zi:', err.stack);
     });
 
-// Nastavení statických souboru
+// NastavenÃ­ statickÃ½ch souboru
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Hlavní stránka - index.html
+// HlavnÃ­ strÃ¡nka - index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -39,7 +39,7 @@ app.get('/registrace', (req, res) => {
     res.sendFile(path.join(__dirname, 'registrace.html'));
 });
 
-// Prihlášení
+// PrihlÃ¡Å¡enÃ­
 app.get('/prihlaseni', (req, res) => {
     res.sendFile(path.join(__dirname, 'prihlaseni.html'));
 });
@@ -59,17 +59,17 @@ app.get('/koupit-mince', (req, res) => {
     res.sendFile(path.join(__dirname, 'koupit mince.html'));
 });
 
-// Komentáre
+// KomentÃ¡re
 app.get('/komentare', (req, res) => {
     res.sendFile(path.join(__dirname, 'komentare.html'));
 });
 
-// Spuštení serveru
+// SpuÅ¡tenÃ­ serveru
 server.listen(port, () => {
-    console.log(`Server beží na http://localhost:${port}`);
+    console.log(`Server beÅ¾Ã­ na http://localhost:${port}`);
 });
 
-// Prihlašovací endpoint
+// PrihlaÅ¡ovacÃ­ endpoint
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -82,7 +82,7 @@ app.post('/login', (req, res) => {
     res.redirect('/client');
 });
 
-// Middleware pro ochranu stránky moderátora
+// Middleware pro ochranu strÃ¡nky moderÃ¡tora
 function isModerator(req, res, next) {
     if (req.session.role === 'moderator') {
         return next();
@@ -90,12 +90,12 @@ function isModerator(req, res, next) {
     res.redirect('/client');
 }
 
-// Route pro moderátora
+// Route pro moderÃ¡tora
 app.get('/moderator', isModerator, (req, res) => {
     res.render('moderator');
 });
 
-// Služba pro obsluhu klientu a moderátora
+// SluÅ¾ba pro obsluhu klientu a moderÃ¡tora
 let clients = [];
 
 io.on('connection', (socket) => {
