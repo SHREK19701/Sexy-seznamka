@@ -1,20 +1,22 @@
 {
-  "dependencies": {
-    "express": "^4.21.1"
-  },
   "name": "sexy-seznamka",
   "version": "1.0.0",
+  "description": "",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "express": "^4.21.1",
+    "socket.io": "^4.5.4",
+    "pg": "^8.10.0",
+    "express-session": "^1.17.3"
+  },
+  "engines": {
+    "node": "16.x"
+  }
 }
 
-"engines": {
-  "node": "16.x"
-}
