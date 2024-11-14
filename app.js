@@ -62,6 +62,9 @@ function initializePage() {
     }
 }
 
-// Spuštění inicializace po načtení obsahu stránky
-document.addEventListener('DOMContentLoaded', initializePage);
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', initializePage);
+}
+
+
 
