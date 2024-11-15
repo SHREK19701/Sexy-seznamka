@@ -8,7 +8,7 @@ const session = require('express-session'); // Přidáme express-session pro spr
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
-const port = 4000;
+const port = process.env.PORT || 10000;
 
 // Konfigurace databázového poolu
 const pool = new Pool({
