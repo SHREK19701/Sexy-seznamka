@@ -1,5 +1,5 @@
 // Nastavení počátečního počtu mincí pro nově registrované uživatele
-let userCoins = 150;
+let userCoins = 500;
 
 // Funkce pro aktualizaci tlačítka pro odesílání zpráv
 function updateSendButtonState() {
@@ -14,14 +14,14 @@ function sendMessage() {
     const messageInput = document.getElementById('messageInput');
     const messageDisplay = document.getElementById('messageDisplay');
 
-    if (userCoins > 0 && messageInput.value.trim() !== "") {
+    if (userCoins > 50 && messageInput.value.trim() !== "") {
         userCoins--;
         const newMessage = document.createElement('p');
         newMessage.textContent = messageInput.value;
         messageDisplay.appendChild(newMessage);
         messageInput.value = '';
         updateSendButtonState();
-    } else if (userCoins <= 0) {
+    } else if (userCoins <= 50) {
         alert("Nemáte dostatek mincí pro odeslání zprávy. Kupte si další mince.");
     }
 }
@@ -36,7 +36,7 @@ function handleRegistration(event) {
 // Funkce pro zpracování URL parametrů
 function fillFormFieldsFromParams() {
     const params = new URLSearchParams(window.location.search);
-    const formFields = ['username', 'password', 'birthdate', 'height', 'weight', 'eyes', 'hair', 'children', 'job', 'hobbies', 'orientation', 'search'];
+    const formFields = ['email',  'username', 'password', 'birthdate', 'height', 'weight', 'eyes', 'hair', 'children', 'job', 'hobbies', 'orientation', 'search'];
 
     formFields.forEach(field => {
         const input = document.getElementById(field);

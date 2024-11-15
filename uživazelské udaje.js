@@ -11,11 +11,12 @@ const client = new Client({
 client.connect();
 
 const insertUserQuery = `
-    INSERT INTO users (username, password, birthdate, height, weight, eyes, hair, children, job, hobbies, orientation, search) 
+    INSERT INTO users (email, username, password, birthdate, height, weight, eyes, hair, children, job, hobbies, orientation, search) 
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
 `;
 
 const userData = [
+    'email',         // email
     'novýUživatel', // username
     'heslo123',     // password
     '1995-05-15',   // birthdate
