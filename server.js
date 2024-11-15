@@ -2,12 +2,12 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const { Pool } = require('pg');
-const socketIo = require('socket.io'); // Přidáme socket.io
-const session = require('express-session'); // Přidáme express-session pro správu session
+const socketIo = require('socket.io');
+const session = require('express-session');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server); // Používáme server pro socket.io
 const port = process.env.PORT || 10000;
 
 // Konfigurace databázového poolu
@@ -31,10 +31,10 @@ pool.connect()
 
 // Middleware pro session
 app.use(session({
-    secret: 'tajnyklic', // nahraďte vlastním tajným klíčem
+    secret: 'tajnyklic',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // secure: true použijte jen při HTTPS
+    cookie: { secure: false }
 }));
 
 // Middleware pro zpracování JSON a URL encoded dat
@@ -44,40 +44,14 @@ app.use(express.urlencoded({ extended: true }));
 // Nastavení statických souborů
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Hlavní stránka - index.html
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Registrace
-app.get('/registrace', (req, res) => {
-    res.sendFile(path.join(__dirname, 'registrace.html'));
-});
-
-// Přihlášení
-app.get('/prihlaseni', (req, res) => {
-    res.sendFile(path.join(__dirname, 'prihlaseni.html'));
-});
-
-// Profil
-app.get('/profil', (req, res) => {
-    res.sendFile(path.join(__dirname, 'profil.html'));
-});
-
-// Chat
-app.get('/chat', (req, res) => {
-    res.sendFile(path.join(__dirname, 'chat.html'));
-});
-
-// Koupit mince
-app.get('/koupit-mince', (req, res) => {
-    res.sendFile(path.join(__dirname, 'koupit mince.html'));
-});
-
-// Komentáře
-app.get('/komentare', (req, res) => {
-    res.sendFile(path.join(__dirname, 'komentare.html'));
-});
+// Různé stránky
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/registrace', (req, res) => res.sendFile(path.join(__dirname, 'registrace.html')));
+app.get('/prihlaseni', (req, res) => res.sendFile(path.join(__dirname, 'prihlaseni.html')));
+app.get('/profil', (req, res) => res.sendFile(path.join(__dirname, 'profil.html')));
+app.get('/chat', (req, res) => res.sendFile(path.join(__dirname, 'chat.html')));
+app.get('/koupit-mince', (req, res) => res.sendFile(path.join(__dirname, 'koupit mince.html')));
+app.get('/komentare', (req, res) => res.sendFile(path.join(__dirname, 'komentare.html')));
 
 // Přihlašovací endpoint
 app.post('/login', (req, res) => {
@@ -102,16 +76,13 @@ function isModerator(req, res, next) {
 
 // Route pro moderátora
 app.get('/moderator', isModerator, (req, res) => {
-    res.sendFile(path.join(__dirname, 'moderator.html')); // render změněno na sendFile
+    res.sendFile(path.join(__dirname, 'moderator.html'));
 });
 
-// Služba pro obsluhu klientů a moderátora
-let clients = [];
-
+// Socket.io obsluha
 io.on('connection', (socket) => {
     console.log('Uživatel připojen');
-    clients.push(socket);
-
+    
     socket.on('clientMessage', (message) => {
         console.log('Zpráva od klienta:', message);
         io.emit('newMessage', message);
@@ -119,12 +90,11 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('Uživatel odpojen');
-        clients = clients.filter(client => client !== socket);
     });
 });
 
 // Spuštění serveru
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server běží na http://localhost:${port}`);
 });
 
