@@ -124,7 +124,7 @@ io.on('connection', (socket) => {
 });
 
 // Spuštění serveru
-server.listen(port, () => {
+app.listen(port, () => {
     console.log(`Server běží na http://localhost:${port}`);
 });
 
