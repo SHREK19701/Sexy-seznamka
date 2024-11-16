@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const client = new Client({
     user: 'postgres',
-    host: 'http',
+    host: 'localhost',
     database: 'db_url',
     password: 'Charalamba11@',
     port: 5432,

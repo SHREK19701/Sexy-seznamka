@@ -11,7 +11,7 @@ const io = socketIo(server); // Napojíme Socket.IO na server
 // Konfigurace databázového poolu
 const pool = new Pool({
     user: 'postgres',
-    host: 'http',
+    host: 'localhost',
     database: 'db_url',
     password: 'Charalamba11@',
     port: 5432,
