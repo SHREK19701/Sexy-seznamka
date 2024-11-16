@@ -14,7 +14,7 @@ const pool = new Pool({
     host: 'localhost',
     database: 'db_url',
     password: 'Charalamba11@',
-    port: 5423,
+    port: 5432,
 });
 
 // Ověření připojení k databázi
