@@ -11,7 +11,7 @@ const io = socketIo(server); // Napojíme Socket.IO na server
 // Konfigurace databázového poolu
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: 'http',
     database: 'db_url',
     password: 'Charalamba11@',
     port: 5432,
@@ -93,6 +93,6 @@ io.on('connection', (socket) => {
 
 // Spuštění serveru
 server.listen(port, () => {
-    console.log(`Server běží na http://localhost:${port}`);
+    console.log(`Server běží na http://http:${port}`);
 });
 
