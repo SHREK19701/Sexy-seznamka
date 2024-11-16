@@ -1,15 +1,13 @@
-const express = require('express');
 const http = require('http');
 const path = require('path');
 const { Pool } = require('pg');
-const socketIo = require('socket.io');
-const session = require('express-session');
+const socketIo = require('socket.io'); // Přidáme socket.io
+const session = require('express-session'); // Přidáme express-session pro správu session
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server); // Používáme server pro socket.io
-const port = process.env.PORT || 10000;
-
+const port = process.env.PORT || 10000; // Použijeme port z proměnné prostředí
+const server = http.createServer(app); // Vytvoříme server
+const io = socketIo(server); // Napojíme Socket.IO na server
 // Konfigurace databázového poolu
 const pool = new Pool({
     user: 'postgres',
