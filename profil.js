@@ -30,7 +30,7 @@ function handleRegistration(event) {
         orientation,
         search
     };
-    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    db_url.setItem('userProfile', JSON.stringify(userProfile));
 
     alert('Registrace byla úspěšná!');
     window.location.href = 'přhlášení.html'; 

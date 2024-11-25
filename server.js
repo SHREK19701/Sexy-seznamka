@@ -4,15 +4,22 @@ const { Pool } = require('pg');
 const socketIo = require('socket.io'); // Přidáme socket.io
 const session = require('express-session'); // Přidáme express-session pro správu session
 
+const express = require('express');
 const app = express();
-const port = process.env.PORT || 10000; // Použijeme port z proměnné prostředí
-const server = http.createServer(app); // Vytvoříme server
-const io = socketIo(server); // Napojíme Socket.IO na server
-// Konfigurace databázového poolu
+
+// Define your routes here
+
+// Make sure to assign the result of app.listen() to a variable
+const server = app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
+
+const io = socketIo(server); // Inicializace Socket.IO s serverem
+
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'db_url',
+    database: 'my_db',
     password: 'Charalamba11@',
     port: 5432,
 });
@@ -89,10 +96,5 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Uživatel odpojen');
     });
-});
-
-// Spuštění serveru
-server.listen(port, () => {
-    console.log(`Server běží na http://http:${port}`);
 });
 

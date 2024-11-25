@@ -25,13 +25,13 @@
         const messages = [];
 
         document.addEventListener('DOMContentLoaded', function() {
-            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            const storedMessages = JSON.parse(db_url.getItem('messages')) || [];
             storedMessages.forEach(msg => messages.push(msg));
             displayReceivedMessages();
         });
 
-        function saveMessagesToLocalStorage() {
-            localStorage.setItem('messages', JSON.stringify(messages));
+        function saveMessagesTodb_url() {
+            db_url.setItem('messages', JSON.stringify(messages));
         }
 
         document.getElementById('messageForm').addEventListener('submit', function(event) {
@@ -44,7 +44,7 @@
 
             const newMessage = { recipient: recipient, message: messageText };
             messages.push(newMessage);
-            saveMessagesToLocalStorage();
+            saveMessagesTodb_url();
 
             successMessage.innerHTML = 'Zpráva byla úspěšně odeslána!';
             errorMessage.innerHTML = '';
@@ -65,7 +65,7 @@
         }
 
         setInterval(function() {
-            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            const storedMessages = JSON.parse(db_url.getItem('messages')) || [];
             if (storedMessages.length > messages.length) {
                 messages.splice(0, messages.length, ...storedMessages);
                 displayReceivedMessages();
@@ -75,7 +75,7 @@
         let previousMessageCount = messages.length;
 
         setInterval(function() {
-            const storedMessages = JSON.parse(localStorage.getItem('messages')) || [];
+            const storedMessages = JSON.parse(db_url.getItem('messages')) || [];
             if (storedMessages.length > previousMessageCount) {
                 alert('Máte novou zprávu!');
             }

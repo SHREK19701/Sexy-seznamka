@@ -133,15 +133,15 @@
     <script>
         let coinBalance;
 
-        // Funkce pro inicializaci mincí z localStorage nebo nastavení výchozí hodnoty
+   
         function initializeCoins() {
-            // Zkontrolujeme, jestli jsou mince již uloženy v localStorage
-            if (localStorage.getItem('coinBalance')) {
-                coinBalance = parseInt(localStorage.getItem('coinBalance'));
+        
+            if (db_url.getItem('coinBalance')) {
+                coinBalance = parseInt(db_url.getItem('coinBalance'));
             } else {
-                // Pokud ne, nastavíme výchozí hodnotu
+              
                 coinBalance = 500;
-                localStorage.setItem('coinBalance', coinBalance); // Uložení mincí do localStorage
+                db_url.setItem('coinBalance', coinBalance); 
             }
             // Aktualizujeme zobrazení mincí
             document.getElementById('coinBalance').textContent = coinBalance;
@@ -155,7 +155,7 @@
                 if (message) {
                     // Odečítáme 50 mincí za odeslání zprávy
                     coinBalance -= 50;
-                    localStorage.setItem('coinBalance', coinBalance); // Uložení nové hodnoty mincí
+                    db_url.setItem('coinBalance', coinBalance); // Uložení nové hodnoty mincí
                     document.getElementById('coinBalance').textContent = coinBalance;
 
                     var messageDisplay = document.getElementById('messages');

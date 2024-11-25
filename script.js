@@ -93,7 +93,7 @@ function uploadPhoto() {
 
         // Uložení obrázku do db_url
         try {
-            localStorage.setItem("profilePhoto", event.target.result);
+            db_url.setItem("profilePhoto", event.target.result);
             alert("Fotka byla úspěšně nahrána!");
         } catch (error) {
             alert("Došlo k chybě při ukládání fotky do db_url.");

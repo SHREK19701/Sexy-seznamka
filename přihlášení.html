@@ -104,8 +104,8 @@
 </nav>
     <script>
         // Předdefinované přihlašovací údaje (pro účely testování)
-        const validUsername = 'BATMAN70';
-        const validPassword = '112233';
+        const validUsername = '';
+        const validPassword = '';
 
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Zabráníme standardnímu odeslání formuláře
@@ -113,11 +113,11 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Kontrola přihlašovacích údajů
+        
             if (username === validUsername && password === validPassword) {
-                // Uložení přihlášení do localStorage
-                localStorage.setItem('loggedIn', true);
-                localStorage.setItem('username', username);
+            
+                db_url.setItem('loggedIn', true);
+                db_url.setItem('username', username);
 
                 // Zobrazení úspěšné zprávy
                 document.getElementById('loginMessage').textContent = 'Byli jste úspěšně přihlášeni!';
