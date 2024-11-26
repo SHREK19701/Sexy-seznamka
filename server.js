@@ -10,7 +10,7 @@ const app = express();
 // Define your routes here
 
 // Make sure to assign the result of app.listen() to a variable
-const server = app.listen(3000, () => {
+const server = app.listen(10000, () => {
     console.log('Server is running on port 3000');
 });
 
