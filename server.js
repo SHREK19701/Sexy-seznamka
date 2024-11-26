@@ -11,7 +11,7 @@ const app = express();
 
 // Make sure to assign the result of app.listen() to a variable
 const server = app.listen(10000, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port 10000');
 });
 
 const io = socketIo(server); // Inicializace Socket.IO s serverem
