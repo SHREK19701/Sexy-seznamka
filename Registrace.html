@@ -4,93 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrace</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #333; /* Tmavší pozadí */
-            color: #fff; /* Světlejší text pro lepší kontrast */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .container {
-            background-color: #444; /* Tmavší pozadí pro formulář */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            width: 100%;
-            max-width: 320px; /* Zmenšení šířky formuláře */
-            overflow-y: auto;
-        }
-        h1 {
-            text-align: center;
-            font-size: 18px; /* Zmenšení velikosti titulku */
-            margin-bottom: 15px;
-            color: #fff;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            font-size: 12px; /* Zmenšení velikosti textu pro label */
-            margin: 6px 0 3px;
-            color: #ccc; /* Světlejší barva pro texty labelů */
-        }
-        input {
-            padding: 5px 10px; /* Zmenšení výšky políček */
-            font-size: 12px; /* Zmenšení písma pro lepší přehlednost */
-            margin-bottom: 8px; /* Zkrácení mezery mezi poli */
-            border: 1px solid #666; /* Tmavší rámeček */
-            border-radius: 4px;
-            width: 100%;
-            background-color: #555; /* Tmavší pozadí pro vstupní pole */
-            color: #fff; /* Světlejší text ve vstupních polích */
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        input:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-            outline: none;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .footer-links {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 12px; /* Zmenšení velikosti písma pro odkazy */
-        }
-        .footer-links a {
-            color: #4CAF50;
-            text-decoration: none;
-            margin: 0 8px;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .coin-info {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #fff;
-        }
-    </style>
+   <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .header {
+        background-color: #800080; /* Fialová barva */
+        color: white;
+        padding: 15px 0;
+        border-radius: 8px 8px 0 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    label {
+        align-self: flex-start;
+        font-weight: bold;
+    }
+
+    input, button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45A049;
+    }
+
+    .footer-links {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+
+    .coin-info {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
 
@@ -172,8 +173,8 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     const orientation = document.getElementById('orientation').value;
     const search = document.getElementById('search').value;
 
-   
-    db_url.setItem('userProfile', JSON.stringify({
+    // Uložení dat do localStorage s bonusovými mincemi
+    localStorage.setItem('userProfile', JSON.stringify({
         email,
         username,
         password,
@@ -191,7 +192,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     }));
 
     // Uložení bonusu 500 mincí přímo do localStorage pro zobrazení
-    db_url.setItem('userCoins', 500);
+    localStorage.setItem('userCoins', 500);
 
     alert("Bonus 500 mincí byl přidán na váš účet!");
 

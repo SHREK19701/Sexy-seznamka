@@ -81,7 +81,7 @@
     <script>
         // Načíst obrázek z localStorage při načítání stránky
         window.onload = function() {
-            const savedImage = db_url.getItem('profileImage');  // Získat obrázek z localStorage
+            const savedImage = localStorage.getItem('profileImage');  // Získat obrázek z localStorage
             if (savedImage) {
                 const profileImage = document.getElementById('profileImage');
                 profileImage.src = savedImage;  // Nastavit src na uložený obrázek
@@ -89,8 +89,8 @@
             }
 
             // Načíst profilová data
-            const userData = JSON.parse(db_url.getItem('userProfile'));
-            const userCoins = db_url.getItem('coins');
+            const userData = JSON.parse(localStorage.getItem('userProfile'));
+            const userCoins = localStorage.getItem('coins');
 
             // Pokud data existují, zobrazí se na stránce
             if (userData) {
@@ -125,7 +125,7 @@
                 const imageData = reader.result;  // Získat obrázek jako data URL
 
                 // Uložit obrázek do localStorage
-                db_url.setItem('profileImage', imageData);
+                localStorage.setItem('profileImage', imageData);
 
                 // Zobrazit obrázek na stránce
                 const profileImage = document.getElementById('profileImage');

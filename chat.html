@@ -129,19 +129,29 @@
     <div class="balance">
         <p>Vaše mince: <span id="coinBalance"></span></p>
     </div>
-
+<nav>
+    <ul>
+        <li><a href="registrace.html">Registrace</a></li>
+        <li><a href="přihlášení.html">Přihlášení</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="index.html">Index</a></li>
+        <li><a href="koupit mince.html">Koupit mince</a></li>
+        <li><a href="komentáře.html">Komentáře</a></li>
+        <li><a href="moderator.html">Moderator</a></li>
+    </ul>
+</nav>
     <script>
         let coinBalance;
 
    
         function initializeCoins() {
         
-            if (db_url.getItem('coinBalance')) {
-                coinBalance = parseInt(db_url.getItem('coinBalance'));
+            if (localStorage.getItem('coinBalance')) {
+                coinBalance = parseInt(localStorage.getItem('coinBalance'));
             } else {
               
                 coinBalance = 500;
-                db_url.setItem('coinBalance', coinBalance); 
+                localStorage.setItem('coinBalance', coinBalance); 
             }
             // Aktualizujeme zobrazení mincí
             document.getElementById('coinBalance').textContent = coinBalance;
@@ -155,7 +165,7 @@
                 if (message) {
                     // Odečítáme 50 mincí za odeslání zprávy
                     coinBalance -= 50;
-                    db_url.setItem('coinBalance', coinBalance); // Uložení nové hodnoty mincí
+                    localStorage.setItem('coinBalance', coinBalance); // Uložení nové hodnoty mincí
                     document.getElementById('coinBalance').textContent = coinBalance;
 
                     var messageDisplay = document.getElementById('messages');

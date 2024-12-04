@@ -63,7 +63,6 @@
         <li><a href="chat.html">Chat</a></li>
         <li><a href="koupit mince.html">Koupit mince</a></li>
         <li><a href="komentáře.html">Komentáře</a></li>
-        <li><a href="moderator.html">Moderator</a></li>
     </ul>
 </nav>
     <main>
@@ -93,16 +92,6 @@
   const clientOrientationElement = document.getElementById('client-orientation');
   const clientSearchingElement = document.getElementById('client-searching');
 
-  // Moderátor
-  const moderatorNameElement = document.getElementById('moderator-name');
-  const moderatorAgeElement = document.getElementById('moderator-age');
-  const moderatorCityElement = document.getElementById('moderator-city');
-  const moderatorDescriptionElement = document.getElementById('moderator-description');
-  const moderatorJobElement = document.getElementById('moderator-job');
-  const moderatorEducationElement = document.getElementById('moderator-education');
-  const moderatorOrientationElement = document.getElementById('moderator-orientation');
-  const moderatorSearchingElement = document.getElementById('moderator-searching');
-
   // Funkce pro úpravu profilů
   function editProfile(element, label) {
     const newValue = prompt(`Zadejte nové ${label}:`, element.innerText);
@@ -110,26 +99,6 @@
       element.innerText = newValue.trim();
     }
   }
-
-  // Upravování klienta
-  document.getElementById('edit-client-name').addEventListener('click', () => editProfile(clientNameElement, 'jméno'));
-  document.getElementById('edit-client-age').addEventListener('click', () => editProfile(clientAgeElement, 'věk'));
-  document.getElementById('edit-client-city').addEventListener('click', () => editProfile(clientCityElement, 'město'));
-  document.getElementById('edit-client-description').addEventListener('click', () => editProfile(clientDescriptionElement, 'popis'));
-  document.getElementById('edit-client-job').addEventListener('click', () => editProfile(clientJobElement, 'práce'));
-  document.getElementById('edit-client-education').addEventListener('click', () => editProfile(clientEducationElement, 'vzdělání'));
-  document.getElementById('edit-client-orientation').addEventListener('click', () => editProfile(clientOrientationElement, 'sexuální orientace'));
-  document.getElementById('edit-client-searching').addEventListener('click', () => editProfile(clientSearchingElement, 'hledám'));
-
-  // Upravování moderátora
-  document.getElementById('edit-moderator-name').addEventListener('click', () => editProfile(moderatorNameElement, 'jméno'));
-  document.getElementById('edit-moderator-age').addEventListener('click', () => editProfile(moderatorAgeElement, 'věk'));
-  document.getElementById('edit-moderator-city').addEventListener('click', () => editProfile(moderatorCityElement, 'město'));
-  document.getElementById('edit-moderator-description').addEventListener('click', () => editProfile(moderatorDescriptionElement, 'popis'));
-  document.getElementById('edit-moderator-job').addEventListener('click', () => editProfile(moderatorJobElement, 'práce'));
-  document.getElementById('edit-moderator-education').addEventListener('click', () => editProfile(moderatorEducationElement, 'vzdělání'));
-  document.getElementById('edit-moderator-orientation').addEventListener('click', () => editProfile(moderatorOrientationElement, 'sexuální orientace'));
-  document.getElementById('edit-moderator-searching').addEventListener('click', () => editProfile(moderatorSearchingElement, 'hledám'));
 
   // Funkce pro odeslání zprávy
   function sendMessage() {

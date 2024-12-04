@@ -19,7 +19,7 @@ const io = socketIo(server); // Inicializace Socket.IO s serverem
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'my_db',
+    database: 'localStorage',
     password: 'Charalamba11@',
     port: 5432,
 });

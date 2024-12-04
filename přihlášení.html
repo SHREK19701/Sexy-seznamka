@@ -116,8 +116,8 @@
         
             if (username === validUsername && password === validPassword) {
             
-                db_url.setItem('loggedIn', true);
-                db_url.setItem('username', username);
+                localStorage.setItem('loggedIn', true);
+                localStorage.setItem('username', username);
 
                 // Zobrazení úspěšné zprávy
                 document.getElementById('loginMessage').textContent = 'Byli jste úspěšně přihlášeni!';

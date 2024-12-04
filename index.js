@@ -91,12 +91,12 @@ function uploadPhoto() {
         imgElement.src = event.target.result;
         imgElement.style.display = "block";
 
-        // Uložení obrázku do db_url
+        // Uložení obrázku do localStorage
         try {
-            db_url.setItem("profilePhoto", event.target.result);
+         localStorage.setItem("profilePhoto", event.target.result);
             alert("Fotka byla úspěšně nahrána!");
         } catch (error) {
-            alert("Došlo k chybě při ukládání fotky do db_url.");
+            alert("Došlo k chybě při ukládání fotky dolocalStorage.");
             console.error("Error:", error);
         }
     };
@@ -113,7 +113,7 @@ function uploadPhoto() {
 
 // Zobrazení uložené fotky při načtení stránky
 window.onload = function() {
-    const savedPhoto = db_url.getItem("profilePhoto");
+    const savedPhoto = localStorage.getItem("profilePhoto");
     if (savedPhoto) {
         const imgElement = document.getElementById("previewImage");
         imgElement.src = savedPhoto;
@@ -134,7 +134,7 @@ window.onload = function() {
 
 // Funkce pro zobrazení profilu
 function displayProfile() {
-    const storedUserData = db_url.getItem("userData");
+    const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
         const userData = JSON.parse(storedUserData);
         document.getElementById('profileUsername').innerText = userData.username;
@@ -179,7 +179,7 @@ function sendMessage() {
     const message = messageInput.value;
     if (message.trim() === '') return; // Neodesílat prázdné zprávy
 
-    if (tokenCount < 30) { // Zkontrolovat, zda má uživatel dostatek žetonů
+    if (tokenCount < 50) { // Zkontrolovat, zda má uživatel dostatek žetonů
         alert("Nemáte dostatek žetonů na odeslání zprávy. Koupíte si je v sekci 'Koupit žetony'.");
         return; // Zastavit odeslání zprávy
     }
@@ -190,20 +190,20 @@ function sendMessage() {
     messageElement.textContent = message;
     messageContainer.appendChild(messageElement);
 
-    tokenCount -= 30; // Odečíst 30 žetonů za odeslání zprávy
+    tokenCount -= 50; // Odečíst 30 žetonů za odeslání zprávy
     updateTokenDisplay(); // Aktualizovat zobrazení počtu žetonů
 
-    // Uložit zprávu do db_url
-    const messages = JSON.parse(db_url.getItem("message") || "[]");
+    // Uložit zprávu do localStorage
+    const messages = JSON.parse(localStorage.getItem("message") || "[]");
     messages.push(message);
-    db_url.setItem("message", JSON.stringify(messages));
+    localStorage.setItem("message", JSON.stringify(messages));
 
     messageInput.value = ''; // Vymazat vstup pro zprávu
 }
 
 // Funkce pro načtení historie zpráv
 function loadMessageHistory() {
-    const messages = JSON.parse(db_url.getItem("message") || "[]");
+    const messages = JSON.parse(localStorage.getItem("message") || "[]");
     const messageContainer = document.getElementById('message-container');
     messages.forEach(msg => {
         const messageElement = document.createElement('div');
@@ -235,7 +235,7 @@ window.onload = function() {
     loadMessageHistory();
 };
 
-// Přidání uživatelských dat do db_url po registraci
+// Přidání uživatelských dat do localStorage po registraci
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
@@ -244,7 +244,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         username: username,
         tokens: tokenCount
     };
-  db_url.setItem("userData", JSON.stringify(userData));
+  localStorage.setItem("userData", JSON.stringify(userData));
 
     validateRegistration(event);
 });

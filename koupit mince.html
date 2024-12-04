@@ -161,12 +161,12 @@ button:hover {
     </ul>
 <script>
 
- // Uložíme data uživatele do db_url
+ // Uložíme data uživatele do localStorage
  
- db_url.setItem('userCoins = 200', userCoins = 200);
- db_url.setItem('coinPrice = 250', coinPrice = 250);
+ localStorage.setItem('userCoins = 500', userCoins = 500);
+ localStorage.setItem('coinPrice = 250', coinPrice = 250);
 // Inicializace mincí pro nově registrované uživatele
-let userCoins = 200; // Bonus pro nově registrované uživatele
+let userCoins = 500; // Bonus pro nově registrované uživatele
 const coinPrice = 250; // Cena za 500 mincí
 
 // Funkce pro výpočet celkových nákladů
