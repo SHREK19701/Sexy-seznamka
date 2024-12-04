@@ -1,21 +1,20 @@
 const http = require('http');
 const path = require('path');
 const { Pool } = require('pg');
-const socketIo = require('socket.io'); // Přidáme socket.io
-const session = require('express-session'); // Přidáme express-session pro správu session
-
+const socketIo = require('socket.io');
+const session = require('express-session');
 const express = require('express');
 const app = express();
 
-// Define your routes here
-
-// Make sure to assign the result of app.listen() to a variable
+// Nastavení serveru
 const server = app.listen(10000, () => {
-    console.log('Server is running on port 10000');
+    console.log('Server běží na portu 10000');
 });
 
-const io = socketIo(server); // Inicializace Socket.IO s serverem
+// Inicializace Socket.IO
+const io = socketIo(server);
 
+// Připojení k databázi
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -24,41 +23,45 @@ const pool = new Pool({
     port: 5432,
 });
 
-// Ověření připojení k databázi
 pool.connect()
     .then(client => {
         console.log('Připojeno k databázi');
         client.release();
     })
     .catch(err => {
-        console.error('Chyba při připojování k databázi:', err.stack);
+        console.error('Chyba při připojení k databázi:', err.stack);
     });
 
-// Middleware pro session
+// Middleware
 app.use(session({
     secret: 'tajnyklic',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false }, // Nastav na true pro produkci
 }));
-
-// Middleware pro zpracování JSON a URL encoded dat
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public'))); // Složka pro statické soubory
 
-// Nastavení statických souborů
-app.use(express.static(path.join(__dirname, 'index.html')));
+// Socket.IO události
+io.on('connection', (socket) => {
+    console.log('Uživatel připojen!');
+    socket.on('chatMessage', (msg) => {
+        console.log(`Zpráva: ${msg}`);
+        io.emit('chatMessage', msg); // Zasílání zpráv všem uživatelům
+    });
+});
 
-// Různé stránky
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/registrace', (req, res) => res.sendFile(path.join(__dirname, 'registrace.html')));
-app.get('/prihlaseni', (req, res) => res.sendFile(path.join(__dirname, 'prihlaseni.html')));
-app.get('/profil', (req, res) => res.sendFile(path.join(__dirname, 'profil.html')));
-app.get('/chat', (req, res) => res.sendFile(path.join(__dirname, 'chat.html')));
-app.get('/koupit-mince', (req, res) => res.sendFile(path.join(__dirname, 'koupit mince.html')));
-app.get('/komentare', (req, res) => res.sendFile(path.join(__dirname, 'komentare.html')));
+// Stránky a routy
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('/registrace', (req, res) => res.sendFile(path.join(__dirname, 'public', 'registrace.html')));
+app.get('/prihlaseni', (req, res) => res.sendFile(path.join(__dirname, 'public', 'prihlaseni.html')));
+app.get('/profil', (req, res) => res.sendFile(path.join(__dirname, 'public', 'profil.html')));
+app.get('/chat', (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
+app.get('/koupit-mince', (req, res) => res.sendFile(path.join(__dirname, 'public', 'koupit-mince.html')));
+app.get('/komentare', (req, res) => res.sendFile(path.join(__dirname, 'public', 'komentare.html')));
 
-// Přihlašovací endpoint
+// Přihlášení
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
@@ -71,30 +74,20 @@ app.post('/login', (req, res) => {
     res.redirect('/client');
 });
 
-// Middleware pro ochranu stránky moderátora
-function isModerator(req, res, next) {
+// Role-based routy
+app.get('/moderator', (req, res) => {
     if (req.session.role === 'moderator') {
-        return next();
+        res.send('Vítejte, moderátore!');
+    } else {
+        res.status(403).send('Nemáte přístup.');
     }
-    res.redirect('/client');
-}
-
-// Route pro moderátora
-app.get('/moderator', isModerator, (req, res) => {
-    res.sendFile(path.join(__dirname, 'moderator.html'));
 });
 
-// Socket.io obsluha
-io.on('connection', (socket) => {
-    console.log('Uživatel připojen');
-    
-    socket.on('clientMessage', (message) => {
-        console.log('Zpráva od klienta:', message);
-        io.emit('newMessage', message);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('Uživatel odpojen');
-    });
+app.get('/client', (req, res) => {
+    if (req.session.role === 'client') {
+        res.send('Vítejte, kliente!');
+    } else {
+        res.status(403).send('Nemáte přístup.');
+    }
 });
 
